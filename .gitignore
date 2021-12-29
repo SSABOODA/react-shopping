@@ -2,3 +2,5 @@ frontend/node_modules/*
 
 backend/my_settings.py
 my_settings.py
+
+config/common/env.json
