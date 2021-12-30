@@ -23,7 +23,6 @@ function Detail(props) {
         let timer = setTimeout(() => {
             modAlert(false);
         }, 2000);
-        console.log('안녕');
         return () => {
             clearTimeout(timer);
         };
@@ -69,7 +68,17 @@ function Detail(props) {
                     <h4 className="pt-5">{findProduct.title}</h4>
                     <p>{findProduct.content}</p>
                     <p>{findProduct.price}원</p>
-                    <button className="btn btn-danger">주문하기</button>
+
+                    <Info inventory={props.inventory}></Info>
+
+                    <button
+                        className="btn btn-danger"
+                        onClick={() => {
+                            props.modInventory([9, 10, 11]);
+                        }}
+                    >
+                        주문하기
+                    </button>
                     <button
                         className="btn btn-danger"
                         onClick={() => {
@@ -83,6 +92,10 @@ function Detail(props) {
             </div>
         </div>
     );
+}
+
+function Info(props) {
+    return <p>재고 : {props.inventory[0]}</p>;
 }
 
 export default Detail;

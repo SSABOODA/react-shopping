@@ -9,6 +9,7 @@ import axios from 'axios';
 
 function App() {
     let [shoes, modShoes] = useState(Data);
+    let [inventory, modInventory] = useState([10, 11, 12]);
 
     return (
         <div className="App">
@@ -82,7 +83,11 @@ function App() {
                 </Route>
 
                 <Route path="/detail/:id">
-                    <Detail shoes={shoes} />
+                    <Detail
+                        shoes={shoes}
+                        inventory={inventory}
+                        modInventory={modInventory}
+                    />
                 </Route>
 
                 <Route path="/:id">
@@ -113,8 +118,6 @@ function Jumbotron() {
 }
 
 function Card(props) {
-    console.log('in');
-    console.log(props);
     return (
         <div className="col-md-4">
             <img
