@@ -4,7 +4,8 @@ import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import './App.css';
 import { Link, Route, Switch } from 'react-router-dom';
 import Data from './data.js';
-import Detail from './Detail';
+import Detail from './Detail.js';
+import axios from 'axios';
 
 function App() {
     let [shoes, modShoes] = useState(Data);
@@ -55,6 +56,28 @@ function App() {
                                 return <Card shoes={shoes[i]} i={i} key={i} />;
                             })}
                         </div>
+                        <button
+                            className="btn btn-primary"
+                            onClick={() => {
+                                axios
+                                    .get(
+                                        'https://codingapple1.github.io/shop/data2.json'
+                                    )
+                                    .then((result) => {
+                                        {
+                                            modShoes([
+                                                ...shoes,
+                                                ...result.data
+                                            ]);
+                                        }
+                                    })
+                                    .catch((err) => {
+                                        console.log(err);
+                                    });
+                            }}
+                        >
+                            더보기
+                        </button>
                     </div>
                 </Route>
 
@@ -90,6 +113,8 @@ function Jumbotron() {
 }
 
 function Card(props) {
+    console.log('in');
+    console.log(props);
     return (
         <div className="col-md-4">
             <img
