@@ -11,7 +11,6 @@ import { BrowserRouter } from 'react-router-dom';
 ReactDOM.render(
     <React.StrictMode>
         <BrowserRouter basename="/shopping">
-            <Link to="/coding" />
             <App />
         </BrowserRouter>
     </React.StrictMode>,
