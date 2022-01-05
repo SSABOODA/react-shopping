@@ -1,11 +1,13 @@
 /* eslint-disable */
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import './App.css';
 import { Link, Route, Switch } from 'react-router-dom';
 import Data from './data.js';
 import Detail from './Detail.js';
 import axios from 'axios';
+
+export let inventoryContext = React.createContext();
 
 function App() {
     let [shoes, modShoes] = useState(Data);
@@ -52,11 +54,15 @@ function App() {
                 <Route exact path="/">
                     <Jumbotron />
                     <div className="container">
-                        <div className="row">
-                            {shoes.map((a, i) => {
-                                return <Card shoes={shoes[i]} i={i} key={i} />;
-                            })}
-                        </div>
+                        <inventoryContext.Provider value={inventory}>
+                            <div className="row">
+                                {shoes.map((a, i) => {
+                                    return (
+                                        <Card shoes={shoes[i]} i={i} key={i} />
+                                    );
+                                })}
+                            </div>
+                        </inventoryContext.Provider>
                         <button
                             className="btn btn-primary"
                             onClick={() => {
@@ -83,11 +89,13 @@ function App() {
                 </Route>
 
                 <Route path="/detail/:id">
-                    <Detail
-                        shoes={shoes}
-                        inventory={inventory}
-                        modInventory={modInventory}
-                    />
+                    <inventoryContext.Provider value={inventory}>
+                        <Detail
+                            shoes={shoes}
+                            inventory={inventory}
+                            modInventory={modInventory}
+                        />
+                    </inventoryContext.Provider>
                 </Route>
 
                 <Route path="/:id">
@@ -118,6 +126,8 @@ function Jumbotron() {
 }
 
 function Card(props) {
+    let inventory = useContext(inventoryContext);
+
     return (
         <div className="col-md-4">
             <img
@@ -132,8 +142,14 @@ function Card(props) {
             <p>
                 {props.shoes.content} & {props.shoes.price}
             </p>
+            {inventory[props.i]}
         </div>
     );
+}
+
+function Test() {
+    let inventory = useContext(inventoryContext);
+    return <p>{재고[0]}</p>;
 }
 
 export default App;

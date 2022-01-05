@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import './Detail.js';
 import './Detail.scss';
+import inventoryContext from './App.js';
 
 // styled-component: css가 미리 입혀진 components를 만드는 것
 let Box = styled.div`
@@ -18,6 +19,7 @@ let Title = styled.h4`
 function Detail(props) {
     let [alert, modAlert] = useState(true);
     let [inputData, modInputData] = useState('');
+    let inventory = useContext(inventoryContext);
 
     useEffect(() => {
         let timer = setTimeout(() => {
