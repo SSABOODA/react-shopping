@@ -9,11 +9,10 @@ import { BrowserRouter } from 'react-router-dom';
 // import { HashRouter } from 'react-router-dom';
 
 ReactDOM.render(
-    <React.StrictMode>
-        <BrowserRouter basename="/shopping">
-            <App />
-        </BrowserRouter>
-    </React.StrictMode>,
+    <BrowserRouter basename="/shopping">
+        <App />
+    </BrowserRouter>,
+
     document.getElementById('root')
 );
 
