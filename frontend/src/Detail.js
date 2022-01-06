@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { Nav } from 'react-bootstrap';
 import styled from 'styled-components';
 import './Detail.js';
 import './Detail.scss';
 import inventoryContext from './App.js';
+import { CSSTransition } from 'react-transition-group';
 
 // styled-component: css가 미리 입혀진 components를 만드는 것
 let Box = styled.div`
@@ -20,7 +22,8 @@ function Detail(props) {
     let [alert, modAlert] = useState(true);
     let [inputData, modInputData] = useState('');
     let inventory = useContext(inventoryContext);
-
+    let [tab, modTab] = useState(0);
+    let [스위치, 스위치변경] = useState(false);
     useEffect(() => {
         let timer = setTimeout(() => {
             modAlert(false);
@@ -92,8 +95,48 @@ function Detail(props) {
                     </button>
                 </div>
             </div>
+            <Nav className="mt-5" variant="tabs" defaultActiveKey="link-0">
+                <Nav.Item>
+                    <Nav.Link
+                        eventKey="link-0"
+                        onClick={() => {
+                            스위치변경(false);
+                            modTab(0);
+                        }}
+                    >
+                        Active
+                    </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link
+                        eventKey="link-1"
+                        onClick={() => {
+                            스위치변경(false);
+                            modTab(0);
+                        }}
+                    >
+                        Option 2
+                    </Nav.Link>
+                </Nav.Item>
+            </Nav>
+            <CSSTransition in={스위치} classNames="wow" timeout={500}>
+                <TabComponent tab={tab} 스위치변경={스위치변경} />
+            </CSSTransition>
         </div>
     );
+}
+
+function TabComponent(props) {
+    useEffect(() => {
+        props.스위치변경(true);
+    });
+    if (props.tab === 0) {
+        return <div>0번째 내용입니다.</div>;
+    } else if (props.tab === 1) {
+        return <div>1번째 내용입니다.</div>;
+    } else if (props.tab === 2) {
+        return <div>2번째 내용입니다.</div>;
+    }
 }
 
 function Info(props) {
